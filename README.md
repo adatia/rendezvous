@@ -19,4 +19,4 @@ Hello everyone at Surfboard! Thanks for checking out my challenge! Rendezvous is
 * Pop-up modals to view full description and details of meeting topics
 
 # Usage
-Hosted live using Firebase at [Rendezvous]()
+Hosted live using Firebase at [Rendezvous](https://rendezvous-adatias.web.app/)
