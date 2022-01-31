@@ -18,6 +18,9 @@ function NewTopic() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [time, setTime] = useState('');
+  const [nameError, setNameError] = useState(false);
+  const [descriptionError, setDescriptionError] = useState(false);
+  const [timeError, setTimeError] = useState(false);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -33,18 +36,31 @@ function NewTopic() {
 
   const handleSubmit = () => {
     if (name && description && time) {
-      const docRef = addDoc(collection(db, "rooms"), {
+      const docRef = addDoc(collection(db, "topics"), {
         name: name,
         description: description,
         time: time,
         timestamp: serverTimestamp()
       });
-    }
 
-    setOpen(false);
-    setName('');
-    setDescription('');
-    setTime('');
+      setOpen(false);
+      setName('');
+      setDescription('');
+      setTime('');
+      setNameError(false);
+      setDescriptionError(false);
+      setTimeError(false);
+    } else {
+      if (!name) {
+        setNameError(true);
+      }
+      if (!description) {
+        setDescriptionError(true);
+      }
+      if (!time) {
+        setTimeError(true);
+      }
+    }
   };
 
   const handleClickOpen = () => {
@@ -56,6 +72,9 @@ function NewTopic() {
     setName('');
     setDescription('');
     setTime('');
+    setNameError(false);
+    setDescriptionError(false);
+    setTimeError(false);
   };
 
   return (
@@ -69,12 +88,13 @@ function NewTopic() {
         <DialogTitle>New Meeting Topic</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please enter the name, description and time estimate of the meeting topic.
+            Please enter the name, description and time estimate of the meeting topic. Note that all fields must be completed.
           </DialogContentText>
           <TextField
             autoFocus
             required
             multiline
+            error={nameError}
             margin="dense"
             label="Topic Name"
             variant="standard"
@@ -87,6 +107,7 @@ function NewTopic() {
             required
             multiline
             fullWidth
+            error={descriptionError}
             margin="dense"
             label="Topic Description"
             variant="standard"
@@ -98,6 +119,7 @@ function NewTopic() {
           <TextField
             required
             multiline
+            error={timeError}
             margin="dense"
             label="Topic Time Estimate"
             variant="standard"

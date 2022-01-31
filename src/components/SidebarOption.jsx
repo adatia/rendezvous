@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { enterRoom } from '../features/appSlice';
+import { switchTopic } from '../features/appSlice';
 import { Tooltip } from '@mui/material';
 import EditTopic from './EditTopic';
 import DeleteTopic from './DeleteTopic';
@@ -11,8 +11,8 @@ function SidebarOption({ title, id, index }) {
 
   const selectMeeting = () => {
     if (id) {
-      dispatch(enterRoom({
-        roomId: id,
+      dispatch(switchTopic({
+        topicId: id,
       }))
     }
   };

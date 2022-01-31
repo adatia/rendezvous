@@ -10,7 +10,7 @@ import NewTopic from './NewTopic';
 import ViewTopic from './ViewTopic';
 
 function Sidebar() {
-  const [channels, loading, error] = useCollection(query(collection(db, "rooms"), orderBy('timestamp')));
+  const [topics, loading, error] = useCollection(query(collection(db, "topics"), orderBy('timestamp')));
   const [user] = useAuthState(auth);
 
   return (
@@ -30,7 +30,7 @@ function Sidebar() {
         <ViewTopic />
       </SidebarTopic>
 
-      {channels?.docs.map((doc, index) => {
+      {topics?.docs.map((doc, index) => {
         return <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} index={index} />;
       })}
     </SiderbarContainer>

@@ -12,13 +12,13 @@ import { setDoc, doc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from '../firebase';
 import CreateIcon from '@mui/icons-material/Create';
 import { useSelector } from 'react-redux';
-import { selectRoomId } from '../features/appSlice';
+import { selectTopicId } from '../features/appSlice';
 import { useDocument } from 'react-firebase-hooks/firestore';
 
 function NewTopic({ title, id }) {
-  const roomId = useSelector(selectRoomId);
-  const [roomDetails] = useDocument(
-    id && doc(db, 'rooms', id)
+  const topicId = useSelector(selectTopicId);
+  const [topicDetails] = useDocument(
+    id && doc(db, 'topics', id)
   );
 
   const [open, setOpen] = useState(false);
@@ -40,11 +40,11 @@ function NewTopic({ title, id }) {
 
   const handleSubmit = () => {
     if (name && description && time) {
-      const docRef = setDoc(doc(db, "rooms", id), {
+      const docRef = setDoc(doc(db, "topics", id), {
         name: name,
         description: description,
         time: time,
-        timestamp: roomDetails?.data().timestamp
+        timestamp: topicDetails?.data().timestamp
       });
     }
 
@@ -57,8 +57,8 @@ function NewTopic({ title, id }) {
   const handleClickOpen = () => {
     setOpen(true);
     setName(title);
-    setDescription(roomDetails?.data().description);
-    setTime(roomDetails?.data().time);
+    setDescription(topicDetails?.data().description);
+    setTime(topicDetails?.data().time);
   };
 
   const handleClose = () => {
@@ -70,7 +70,7 @@ function NewTopic({ title, id }) {
 
   return (
     <NewTopicContainer>
-      <Tooltip title={`Edit ${roomDetails?.data().name}`}>
+      <Tooltip title={`Edit ${topicDetails?.data().name}`}>
         <CreateIcon className='createIcon' onClick={handleClickOpen} />
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>

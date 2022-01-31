@@ -13,7 +13,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import { query, doc, orderBy } from "firebase/firestore";
 import { useSelector } from 'react-redux';
-import { selectRoomId } from '../features/appSlice';
+import { selectTopicId } from '../features/appSlice';
 
 const style = {
   position: 'absolute',
@@ -32,9 +32,9 @@ function ViewTopic() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const roomId = useSelector(selectRoomId);
-  const [roomDetails] = useDocument(
-    roomId && doc(db, 'rooms', roomId)
+  const topicId = useSelector(selectTopicId);
+  const [topicDetails] = useDocument(
+    topicId && doc(db, 'topics', topicId)
   );
 
   return (
@@ -53,21 +53,21 @@ function ViewTopic() {
             Topic Name:
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {roomDetails?.data().name}
+            {topicDetails?.data().name}
           </Typography>
           <hr style={{marginBottom: 10, marginTop: 10}} />
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Topic Description:
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {roomDetails?.data().description}
+            {topicDetails?.data().description}
           </Typography>
           <hr style={{marginBottom: 10, marginTop: 10}} />
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Topic Time Estimate:
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {roomDetails?.data().time}
+            {topicDetails?.data().time}
           </Typography>
         </Box>
       </Modal>

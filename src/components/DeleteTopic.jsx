@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { db } from '../firebase';
 import { deleteDoc, doc } from "firebase/firestore";
 import { useDispatch } from 'react-redux';
-import { enterRoom } from '../features/appSlice';
+import { switchTopic } from '../features/appSlice';
 import { Tooltip } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -19,10 +19,10 @@ function DeleteTopic({ title, id }) {
   const dispatch = useDispatch();
 
   const deleteMeeting = () => {
-    dispatch(enterRoom({
-      roomId: null,
+    dispatch(switchTopic({
+      topicId: null,
     }));
-    deleteDoc(doc(db, "rooms", id));
+    deleteDoc(doc(db, "topics", id));
 
     setOpen(false);
   };
