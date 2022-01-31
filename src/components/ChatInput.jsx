@@ -5,20 +5,20 @@ import { auth, db } from '../firebase';
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-function ChatInput({ channelName, channelId, chatRef }) {
+function ChatInput({ topicName, topicId, chatRef }) {
   const [input, setInput] = useState('');
   const [user] = useAuthState(auth);
 
   const sendMessage = e => {
     e.preventDefault();
 
-    if (!channelId) {
+    if (!topicId) {
       return false;
     }
 
     if (input) {
 
-      const docRef = addDoc(collection(db, 'rooms', channelId, 'messages'), {
+      const docRef = addDoc(collection(db, 'topics', topicId, 'messages'), {
         message: input,
         timestamp: serverTimestamp(),
         user: user.displayName,
@@ -37,7 +37,7 @@ function ChatInput({ channelName, channelId, chatRef }) {
   return (
     <ChatInputContainer>
       <form>
-        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder={`Message ${channelName} chat session`} />
+        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder={`Message ${topicName} chat session`} />
         <Button hidden type='submit' onClick={sendMessage}>
           SEND
         </Button>

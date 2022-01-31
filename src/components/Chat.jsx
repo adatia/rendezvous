@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { selectRoomId } from '../features/appSlice';
+import { selectTopicId } from '../features/appSlice';
 import ChatInput from './ChatInput';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import { query, collection, doc, orderBy } from "firebase/firestore";
@@ -10,33 +10,33 @@ import Message from './Message';
 
 function Chat() {
   const chatRef = useRef(null);
-  const roomId = useSelector(selectRoomId);
-  const [roomDetails] = useDocument(
-    roomId && doc(db, 'rooms', roomId)
+  const topicId = useSelector(selectTopicId);
+  const [topicDetails] = useDocument(
+    topicId && doc(db, 'topics', topicId)
   );
   
-  const [roomMessages, loading] = useCollection(
-    roomId && query(collection(db, 'rooms', roomId, 'messages'), orderBy('timestamp'))
+  const [topicMessages, loading] = useCollection(
+    topicId && query(collection(db, 'topics', topicId, 'messages'), orderBy('timestamp'))
   );
 
   useEffect(() => {
     chatRef?.current?.scrollIntoView({
       behavior: 'smooth',
     });
-  }, [roomId, loading]);
+  }, [topicId, loading]);
 
 
   return (
     <ChatContainer>
-      {roomDetails && roomMessages && (
+      {topicDetails && topicMessages && (
         <>
           <Header>
             <HeaderLeft>
-              <h4><strong>{roomDetails?.data().name} Chat Session</strong></h4>
+              <h4><strong>{topicDetails?.data().name} Chat Session</strong></h4>
             </HeaderLeft>
           </Header>
           <ChatMessages>
-            {roomMessages?.docs.map(doc => {
+            {topicMessages?.docs.map(doc => {
               const { message, timestamp, user, userImage } = doc.data()
 
               return (
@@ -46,7 +46,7 @@ function Chat() {
             <ChatBottom ref={chatRef} />
           </ChatMessages>
 
-          <ChatInput chatRef={chatRef} channelName={roomDetails?.data().name} channelId={roomId} />
+          <ChatInput chatRef={chatRef} topicName={topicDetails?.data().name} topicId={topicId} />
         </>
       )}
     </ChatContainer>
