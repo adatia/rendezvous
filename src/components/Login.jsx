@@ -15,10 +15,7 @@ function Login() {
   return (
     <LoginContainer>
       <LoginInnerContainer>
-        <img src="https://cdn.mos.cms.futurecdn.net/SDDw7CnuoUGax6x9mTo7dd.jpg" alt="" />
         <h1>Sign into Rendezvous</h1>
-        <p>surfboard.rendezvous.com</p>
-
         <Button onClick={signIn}>
           Sign in with Google
         </Button>
@@ -44,16 +41,15 @@ const LoginInnerContainer = styled.div`
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
-  > img {
-    object-fit: contain;
-    height: 100px;
-    margin-bottom: 40px;
-  }
-
   > button {
     margin-top: 50px;
     text-transform: inherit !important;
     background-color: #0a8d48 !important;
     color: white;
+    font-family: circular-medium;
+  }
+
+  > h1 {
+    font-family: circular-black;
   }
 `;

@@ -31,10 +31,19 @@ const MessageContainer = styled.div`
 const MessageInfo = styled.div`
   padding-left: 10px;
 
+  > h4 {
+    padding-bottom: 8px;
+  }
+
   > h4 > span {
     color: gray;
     font-weight: 300;
     margin-left: 4px;
     font-size: 10px;
+  }
+
+  > p {
+    width: 65vw;
+    word-wrap: break-word;
   }
 `;

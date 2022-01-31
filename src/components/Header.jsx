@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Avatar } from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import SearchIcon from '@mui/icons-material/Search';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { Avatar, Tooltip } from '@mui/material';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth'
+import GroupsIcon from '@mui/icons-material/Groups';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function Header() {
   const [user] = useAuthState(auth);
@@ -15,17 +14,18 @@ function Header() {
     <HeaderContainer>
 
       <HeaderLeft>
-        <HeaderAvatar onClick={() => signOut(auth)} src={user?.photoURL} alt={user?.displayName} />
-        <AccessTimeIcon />
+        <Avatar src={user?.photoURL} alt={user?.displayName} />
       </HeaderLeft>
 
       <HeaderSearch>
-        <SearchIcon />
-        <input placeholder="Search Meeting" />
+        <GroupsIcon />
+        <h2>Rendezvous</h2>
       </HeaderSearch>
 
       <HeaderRight>
-        <HelpOutlineIcon />
+        <Tooltip title='Logout'>
+          <LogoutIcon onClick={() => signOut(auth)} />
+        </Tooltip>
       </HeaderRight>
     </HeaderContainer>
   );
@@ -56,32 +56,20 @@ const HeaderLeft = styled.div`
   }
 `;
 
-const HeaderAvatar = styled(Avatar)`
-  cursor: pointer;
-
-  :hover {
-    opacity: 0.8;
-  }
-`;
-
 const HeaderSearch = styled.div`
   flex: 0.4;
-  opacity: 1;
-  border-radius: 6px;
-  background-color: #421f44;
   text-align: center;
   display: flex;
-  padding: 0 50px;
-  color: gray;
-  border: 1px gray solid;
+  justify-content: center;
+  color: white;
 
-  > input {
-    background-color: transparent;
-    border: none;
-    text-align: center;
-    min-width: 30vw;
-    outline: 0;
-    color: white;
+  > h2 {
+    font-family: circular-medium;
+  }
+
+  > .MuiSvgIcon-root {
+    font-size: 30px;
+    margin-right: 10px;
   }
 `;
 
@@ -93,5 +81,10 @@ const HeaderRight = styled.div`
   > .MuiSvgIcon-root {
     margin-left: auto;
     margin-right: 20px;
+  }
+
+  .MuiSvgIcon-root:hover {
+    cursor: pointer;
+    opacity: 0.8;
   }
 `;

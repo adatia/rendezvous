@@ -1,24 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { db } from '../firebase';
-import { addDoc, collection } from "firebase/firestore";
 import { useDispatch } from 'react-redux';
 import { enterRoom } from '../features/appSlice';
+import { Tooltip } from '@mui/material';
+import EditTopic from './EditTopic';
+import DeleteTopic from './DeleteTopic';
 
-function SidebarOption({ Icon, title, addChannelOption, id }) {
+function SidebarOption({ title, id, index }) {
   const dispatch = useDispatch();
 
-  const addChannel = () => {
-    const channelName = prompt('Please enter the channel name');
-
-    if (channelName) {
-      const docRef = addDoc(collection(db, "rooms"), {
-        name: channelName,
-      });
-    }
-  };
-
-  const selectChannel = () => { 
+  const selectMeeting = () => {
     if (id) {
       dispatch(enterRoom({
         roomId: id,
@@ -27,16 +18,16 @@ function SidebarOption({ Icon, title, addChannelOption, id }) {
   };
 
   return (
-    <SidebarOptionContainer onClick={addChannelOption ? addChannel : selectChannel}>
-      {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
-      {Icon ? (
-        <h3>{title}</h3>
-      ) : (
-        <SidebarOptionChannel>
-          <span>#</span> {title}
-        </SidebarOptionChannel>
-
-      )}
+    <SidebarOptionContainer>
+      <Tooltip title={`Go to meeting topic ${title}`}>
+        <div className='title' onClick={selectMeeting}>
+          <h3>{index + 1}. {title}</h3>
+        </div>
+      </Tooltip>
+      <ModificationButtons>
+        <EditTopic title={title} id={id} />
+        <DeleteTopic title={title} id={id} />
+      </ModificationButtons>
     </SidebarOptionContainer>
   );
 }
@@ -47,24 +38,41 @@ const SidebarOptionContainer = styled.div`
   display: flex;
   font-size: 12px;
   align-items: center;
-  padding-left: 2px;
-  cursor: pointer;
+  justify-content: space-between;
+  padding: 8px;
 
-  :hover {
-    opacity: 0.9;
-    background-color: #340e36;
-  }
-
-  > h3 {
+  > .title {
+    padding-left: 10px;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: circular-book;
   }
 
-  > h3 > span {
-    padding: 15px;
+  > .title > span {
+    padding-right: 15px;
+  }
+
+  > .title:hover {
+    opacity: 0.8;
   }
 `;
 
-const SidebarOptionChannel = styled.h3`
-  padding: 10px 0;
-  font-weight: 300;
+const ModificationButtons = styled.div`
+  display: flex;
+  align-items: center;
+
+  > .deleteIcon {
+    padding: 8px;
+    color: white;
+    font-size: 18px;
+    border-radius: 999;
+    cursor: pointer;
+  }
+
+  > .deleteIcon:hover {
+    opacity: 0.8;
+  }
 `;

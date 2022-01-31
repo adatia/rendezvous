@@ -1,21 +1,20 @@
 import React from 'react';
 import './App.css';
-import { Routes, Route, Link } from "react-router-dom";
 import { Header, Sidebar, Chat, Login } from './components';
 import styled from 'styled-components';
+import Spinner from 'react-spinkit';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './firebase';
-import Spinner from 'react-spinkit';
 
 function App() {
   const [user, loading] = useAuthState(auth);
-
+  
   if (loading) {
     return (
       <AppLoading>
         <AppLoadingContents>
-          <img src="https://cdn.mos.cms.futurecdn.net/SDDw7CnuoUGax6x9mTo7dd.jpg" alt="" />
-          <Spinner name="ball-spin-fade-loader" color="purple" fadeIn="none" />
+          <h1>Welcome to Rendezvous!</h1>
+          <Spinner name="ball-scale-ripple-multiple" color="purple" fadeIn="false"/>
         </AppLoadingContents>
       </AppLoading>
     )
@@ -28,9 +27,7 @@ function App() {
           <Header />
           <AppBody>
             <Sidebar />
-            <Routes>
-              <Route path="/" element={<Chat />} />
-            </Routes>
+            <Chat />
           </AppBody>
         </>
       )}
@@ -60,9 +57,10 @@ const AppLoadingContents = styled.div`
   justify-content: center;
   align-items: center;
 
-  > img {
-    height: 100px;
-    padding: 20px;
+  > h1 {
+    font-family: circular-black;
+    height: 50px;
+    padding: 10px;
     margin-bottom: 40px;
   }
 `;
