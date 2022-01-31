@@ -1,4 +1,11 @@
+* {
+  margin: 0;
+}
+
 body {
+  --rendezvous-color: #3f0f40;
+  overflow: hidden;
+
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +17,29 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: 'circular-medium';
+  src: local('circular-medium'), url(./fonts/circular-medium.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'circular-light';
+  src: local('circular-light'), url(./fonts/circular-light.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'circular-book';
+  src: local('circular-book'), url(./fonts/circular-book.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'circular-bold';
+  src: local('circular-bold'), url(./fonts/circular-bold.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'circular-black';
+  src: local('circular-black'), url(./fonts/circular-black.otf) format('opentype');
 }
