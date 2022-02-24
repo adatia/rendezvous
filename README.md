@@ -1,6 +1,6 @@
 # Welcome to Rendezvous!
 
-Hello everyone at Surfboard! Thanks for checking out my challenge! Rendezvous is a platform for users to run investor meetings in. I hope you enjoy!
+Rendezvous is a platform for users to run investor meetings in.
 
 ### Built With
 
